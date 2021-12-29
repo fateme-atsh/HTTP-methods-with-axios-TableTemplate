@@ -4,26 +4,21 @@ import ShowTable from './ShowTable';
 
 const Table = () => {
 
-        const [user, setUser]= useState([]);
+    const [users, setUsers] = useState(null);
 
-        useEffect( () => { 
-            const getUsers = async () => {
-                await axios.get('https://jsonplaceholder.typicode.com/users')
-                 .then((response) => { setUser = response.data; })  
-             }
-         }, []);
+    useEffect(() => {
+        const getUsers = async () => {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+            const data = [...response.data]
+            setUsers(data);
+            console.log(data);
+        };
+        if (!users) {
+            getUsers();
+        };
+    }, []);
 
-        
 
-console.log(user);
-        // const Users = users.map( user => {
-        //     return <ShowTable 
-        //     key={user.id} 
-        //     name={user.name} 
-        //     username={user.username} 
-        //     email={user.email} 
-        //     phone={user.phone}/>
-        //         });
 
     return (
         <main className='my-5 mx-2  grid grid-cols-1'>
@@ -38,7 +33,21 @@ console.log(user);
                         <th className='py-4 px-2'>Action</th>
                     </tr>
                 </thead>
-                <ShowTable users={user} />
+                {users !== null ?
+                <tbody>
+                        {users.map(user => (<ShowTable
+                            id={user.id}
+                            name={user.name}
+                            username={user.username}
+                            email={user.email}
+                            phone={user.phone}/>
+                        ))}
+                    </tbody>
+                    :
+                    <tbody><tr><td className='text-red-500 font-8xl font-black'> NO DATA </td></tr></tbody>
+
+                }
+
             </table>
         </main>
     )

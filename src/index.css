@@ -3,8 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer utilities{
-    .table-row-style{
-        @apply  py-4 px-2 ;
+
+@layer components {
+    .input-style{
+        @apply border rounded-md bg-gray-100 w-1/4 text-xl mb-5 absolute left-72;
     }
-} */
+}

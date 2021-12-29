@@ -1,12 +1,9 @@
-import AddNewUser from "./component/AddNewUser";
-import InformationTable from "./component/InformationTable";
-
+import Layout from "./layout";
 
 function App() {
   return (
     <div className="App">
-      <AddNewUser/>
-      <InformationTable/>
+      <Layout/>
     </div>
   );
 }
