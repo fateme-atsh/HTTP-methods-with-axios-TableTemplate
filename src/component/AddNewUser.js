@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { nanoid } from 'nanoid';
 import ShowTable from './ShowTable';
 
@@ -47,6 +49,9 @@ const AddNewUser = () => {
             setUsers(newUsers);
             console.log(newUsers)
         }
+        axios.post('https://jsonplaceholder.typicode.com/posts/', newUser).then(response => {
+            console.log(response);
+        });
     }
 
     const handleFormCancle = (event) => {
@@ -59,6 +64,9 @@ const AddNewUser = () => {
         <>
             <header className='bg-violet-700 text-white p-4 grid grid-cols-2'>
                 <h1 className='text-3xl font-bold'>Add New User Imformations</h1>
+                <div className='grid justify-items-end'>
+     <Link to="/home" className='bg-gray-100 text-slate-900 rounded-md px-6 py-3 hover:bg-gray-300 text-xl'>Back</Link>
+     </div>
             </header>
 
             <section className='my-5 mx-2 relative'>

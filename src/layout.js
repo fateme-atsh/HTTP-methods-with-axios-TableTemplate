@@ -10,7 +10,7 @@ function Layout() {
       <Router>
       
         <Routes>
-          <Route index element={<IndexPageLayout/>}/>
+          <Route path="/home" element={<IndexPageLayout/>}/>
           <Route path="/new" element={<AddNewUser/>}/>
         </Routes>
         

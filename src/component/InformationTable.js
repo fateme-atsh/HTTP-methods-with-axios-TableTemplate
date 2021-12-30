@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShowTable from './ShowTable';
-import AddNewUser from './AddNewUser';
 
-const Table = () => {
+const InformationTable = () => {
 
     const [users, setUsers] = useState(null);
 
@@ -58,4 +57,5 @@ const Table = () => {
     )
 }
 
-export default Table;
+export default InformationTable;
+    ;
