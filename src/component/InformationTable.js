@@ -54,10 +54,10 @@ const InformationTable = () => {
     }
 
     //when user clicked the edit button in a row && edit the field value.
-    const editClick = (e, user) => {
-        e.preventDefault();
+    const editClick = (event, user) => {
+        event.preventDefault();
         setRowId(user.id);
-        console.log(user.id)
+        console.log(user.id);
 
         const editValues = {
             name: user.name,
@@ -68,7 +68,6 @@ const InformationTable = () => {
 
         setEditTableRows(editValues);
     }
-
 
     return (
         <main className='m-10  grid grid-cols-1'>

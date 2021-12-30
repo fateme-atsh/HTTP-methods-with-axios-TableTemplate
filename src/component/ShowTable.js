@@ -9,7 +9,7 @@ const ShowTable = ( user, editClick ) => {
             <td className='py-4 px-2'>{user.email}</td>
             <td className='py-4 px-2'>{user.phone}</td>
             <td>
-                <button type="button" onClick={(e) => editClick(e,user)} 
+                <button type="button" onClick={(event) => editClick(event,user)} 
                     className='px-3 py-2 mx-3 bg-white border border-gray-900 rounded-md hover:bg-gray-500 hover:text-white'>
                     Edit </button>
 
