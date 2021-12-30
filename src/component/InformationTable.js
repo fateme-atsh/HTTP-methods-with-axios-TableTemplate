@@ -11,8 +11,6 @@ const InformationTable = () => {
             const response = await axios.get('https://jsonplaceholder.typicode.com/users');
             const data = [...response.data]
             setUsers(data);
-            const saveLocalData = JSON.stringify(data);
-            localStorage.setItem('users', saveLocalData);
         };
         if (!users) {
             getUsers();

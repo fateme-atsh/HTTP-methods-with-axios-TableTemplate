@@ -53,13 +53,7 @@ const AddNewUser = () => {
             console.log(response);
         });
     }
-
-    const handleFormCancle = (event) => {
-        
-
-    }
     
-
     return (
         <>
             <header className='bg-violet-700 text-white p-4 grid grid-cols-2'>
@@ -69,7 +63,7 @@ const AddNewUser = () => {
      </div>
             </header>
 
-            <section className='my-5 mx-2 relative'>
+            <main className='my-5 mx-2 relative'>
                 <form onSubmit={handleFormSubmit}>
                     <div className='my-5'>
                         <label className='font-semibold text-2xl px-3 mt-5'>
@@ -110,11 +104,11 @@ const AddNewUser = () => {
                     <div className='my-5'>
                         <input type="submit" value="Save"
                             className='border rounded-md bg-violet-700 text-white m-4 p-4 w-1/12 hover:cursor-pointer'/>
-                        <input type="click" value="Canlcel" onClick={handleFormCancle}
+                        <input type="reset" value="Canlcel"
                             className='border rounded-md bg-gray-300 m-4 p-4 w-1/12 text-center hover:cursor-pointer'/>
                     </div>
                 </form>
-                <div className='grid grid-cols-1'>
+                <section className='grid grid-cols-1'>
                 <table className='my-5 mx-2'>
                 <thead className='bg-gray-800 text-white'>
                     <tr>
@@ -141,8 +135,8 @@ const AddNewUser = () => {
 
                 }
                 </table>
-                </div>
-            </section>
+                </section>
+            </main>
         </>
     )
 }
