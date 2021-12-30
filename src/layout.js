@@ -13,6 +13,7 @@ function Layout() {
           <Route index element={<IndexPageLayout/>}/>
           <Route path="/new" element={<AddNewUser/>}/>
         </Routes>
+        
       </Router>
     </div>
   );

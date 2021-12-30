@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShowTable from './ShowTable';
+import AddNewUser from './AddNewUser';
 
 const Table = () => {
 
@@ -11,12 +12,16 @@ const Table = () => {
             const response = await axios.get('https://jsonplaceholder.typicode.com/users');
             const data = [...response.data]
             setUsers(data);
-            console.log(data);
+            const saveLocalData = JSON.stringify(data);
+            localStorage.setItem('users', saveLocalData);
         };
         if (!users) {
             getUsers();
         };
     }, []);
+    useEffect(() => {
+        localStorage.setItem('users', JSON.stringify(users));
+    }, [users]);
 
 
 
