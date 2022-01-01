@@ -3,10 +3,7 @@ import React from 'react';
 const EditTable = ( handleTableRowsChange , editClick) => {
     return (
         <tr className='text-center odd:bg-gray-100 even:bg-gray-200 hover:bg-gray-300'>
-            <td className='py-4 px-2'>
-                <input name="id" type="text" required="required" 
-                onChange={handleTableRowsChange}/>
-            </td>
+            <td className='py-4 px-2'></td>
 
             <td className='py-4 px-2'>
                 <input name="name" type="text" required="required" 

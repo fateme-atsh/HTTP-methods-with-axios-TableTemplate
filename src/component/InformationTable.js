@@ -54,16 +54,16 @@ const InformationTable = () => {
     }
 
     //when user clicked the edit button in a row && edit the field value.
-    const editClick = (event, user) => {
+    const editClick = (event, props) => {
         event.preventDefault();
-        setRowId(user.id);
-        console.log(user.id);
+        setRowId(props.id);
+        console.log(props.id);
 
         const editValues = {
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            phone: user.phone,
+            name: props.name,
+            username: props.username,
+            email: props.email,
+            phone: props.phone,
         };
 
         setEditTableRows(editValues);
@@ -87,7 +87,7 @@ const InformationTable = () => {
                         <tbody>
                             {localDAtaObject.map((user) => (
                                 <Fragment>
-                                    {rowId == user.id ?
+                                    {rowId === user.id ?
                                         <EditTable
                                             handleTableRowsChange={handleTableRowsChange}
                                             editClick={editClick} />
