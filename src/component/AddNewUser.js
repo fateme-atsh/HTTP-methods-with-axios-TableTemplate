@@ -10,9 +10,9 @@ const AddNewUser = () => {
     const localDAta = useContext(LocalStorageContext);
     const [user, setUser] = useState([]);
     
-    // useEffect(() => {
+    useEffect(() => {
         localStorage.setItem('newusers', JSON.stringify(user));
-    // }, [user]);
+    }, [user]);
 
     const [addNewUser, setAddNewUser] = useState({
         name: '',
@@ -44,7 +44,7 @@ const AddNewUser = () => {
         };
 
         let LocalData = localStorage.getItem('newusers');
-        
+
         if (LocalData) {
             let localDataObject = JSON.parse(LocalData);
             const newUsers = [...localDataObject, newUser];
