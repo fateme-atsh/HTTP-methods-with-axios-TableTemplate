@@ -6,7 +6,6 @@ export const LocalStorageContext = createContext();
 const LocalStorageContextProvider = ({ ...props }) => {
 
     const [users, setUsers] = useState([]);
-   
     const [localDAtaObject, setLocalDataObject] = useState([]);
 
     // get the data from server.
