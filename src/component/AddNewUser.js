@@ -3,18 +3,32 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ShowTable from './ShowTable';
 import { LocalStorageContext } from '../context/LocalStorageContest';
+import { nanoid } from 'nanoid';
 
 
 const AddNewUser = () => {
 
     const localDAta = useContext(LocalStorageContext);
+    const [allUsers, setAllUsers] = useState([])
     const [user, setUser] = useState([]);
-    
+
+    //save new user with new localstorage key  & change the localstorageConext data.
     useEffect(() => {
         localStorage.setItem('newusers', JSON.stringify(user));
     }, [user]);
 
+    // useEffect(() => {
+    //     const addNewUser = localStorage.getItem('newusers');
+    //     setAllUsers([...localDAta,...JSON.parse(addNewUser)]);
+    //     console.log(allUsers);
+        
+    //     if (allUsers !== null) {
+    //         localStorage.setItem('users', JSON.stringify(allUsers));
+    //     }
+    // }, [user && allUsers]);
+
     const [addNewUser, setAddNewUser] = useState({
+        id: nanoid(),
         name: '',
         username: '',
         email: '',
@@ -37,6 +51,7 @@ const AddNewUser = () => {
         event.preventDefault();
 
         const newUser = {
+            id: addNewUser.id,
             name: addNewUser.name,
             username: addNewUser.username,
             email: addNewUser.email,
@@ -44,7 +59,6 @@ const AddNewUser = () => {
         };
 
         let LocalData = localStorage.getItem('newusers');
-
         if (LocalData) {
             let localDataObject = JSON.parse(LocalData);
             const newUsers = [...localDataObject, newUser];
@@ -54,14 +68,14 @@ const AddNewUser = () => {
             console.log(response);
         });
     }
-    
+
     return (
         <>
             <header className='bg-violet-700 text-white p-4 grid grid-cols-2'>
                 <h1 className='text-3xl font-bold'>Add New User Imformations</h1>
                 <div className='grid justify-items-end'>
-     <Link to="/home" className='bg-gray-100 text-slate-900 rounded-md px-6 py-3 hover:bg-gray-300 text-xl'>Back</Link>
-     </div>
+                    <Link to='/' className='bg-gray-100 text-slate-900 rounded-md px-6 py-3 hover:bg-gray-300 text-xl'>Back</Link>
+                </div>
             </header>
 
             <main className='my-5 mx-2 relative'>
@@ -104,38 +118,39 @@ const AddNewUser = () => {
 
                     <div className='my-5'>
                         <input type="submit" value="Save"
-                            className='border rounded-md bg-violet-700 text-white m-4 p-4 w-1/12 hover:cursor-pointer'/>
+                            className='border rounded-md bg-violet-700 text-white m-4 p-4 w-1/12 hover:cursor-pointer' />
                         <input type="reset" value="Canlcel"
-                            className='border rounded-md bg-gray-300 m-4 p-4 w-1/12 text-center hover:cursor-pointer'/>
+                            className='border rounded-md bg-gray-300 m-4 p-4 w-1/12 text-center hover:cursor-pointer' />
                     </div>
                 </form>
-                <section className='grid grid-cols-1'>
-                <table className='my-5 mx-2'>
-                <thead className='bg-gray-800 text-white'>
-                    <tr>
-                        <th className='py-4 px-2'></th>
-                        <th className='py-4 px-2'>Name</th>
-                        <th className='py-4 px-2'>User Name</th>
-                        <th className='py-4 px-2'>Email</th>
-                        <th className='py-4 px-2'>Phone Number</th>
-                        <th className='py-4 px-2'>Action</th>
-                    </tr>
-                </thead>
-                {user !== null ?
-                <tbody>
-                        {user.map(user => (<ShowTable
-                            id={null}
-                            name={user.name}
-                            username={user.username}
-                            email={user.email}
-                            phone={user.phone}/>
-                        ))}
-                    </tbody>
-                    :
-                    <tbody><tr><td className='text-red-500 font-8xl font-black'> NO DATA </td></tr></tbody>
 
-                }
-                </table>
+                <section className='grid grid-cols-1'>
+                    <table className='my-5 mx-2'>
+                        <thead className='bg-gray-800 text-white'>
+                            <tr>
+                                <th className='py-4 px-2'></th>
+                                <th className='py-4 px-2'>Name</th>
+                                <th className='py-4 px-2'>User Name</th>
+                                <th className='py-4 px-2'>Email</th>
+                                <th className='py-4 px-2'>Phone Number</th>
+                                <th className='py-4 px-2'>Action</th>
+                            </tr>
+                        </thead>
+                        {user !== null ?
+                            <tbody>
+                                {user.map(user => (<ShowTable
+                                    id={null}
+                                    name={user.name}
+                                    username={user.username}
+                                    email={user.email}
+                                    phone={user.phone} />
+                                ))}
+                            </tbody>
+                            :
+                            <tbody><tr><td className='text-red-500 font-8xl font-black'> NO DATA </td></tr></tbody>
+
+                        }
+                    </table>
                 </section>
             </main>
         </>

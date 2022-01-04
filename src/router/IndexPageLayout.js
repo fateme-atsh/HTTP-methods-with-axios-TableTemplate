@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header';
-import InformationTable from './InformationTable'
+import Header from '../component/Header';
+import InformationTable from '../component/InformationTable'
 
 const IndexPageLayout = () => {
     return (

@@ -2,11 +2,13 @@ import React, { useState, Fragment, useContext } from 'react';
 import ShowTable from './ShowTable';
 import EditTable from './EditTable';
 import { LocalStorageContext } from '../context/LocalStorageContest';
+import axios from 'axios';
 
 const InformationTable = () => {
-    
+
     const localDAta = useContext(LocalStorageContext);
-    if(localDAta){console.log(localDAta);}
+    const [users, setUsers] = useState(localDAta);
+    if (localDAta) { console.log(localDAta); }
 
     const [editTableRows, setEditTableRows] = useState(
         {
@@ -48,18 +50,38 @@ const InformationTable = () => {
         };
 
         setEditTableRows(editValues);
-    }
+    };
+
+    const handleDeleteRows = (event, props) => {
+        event.preventDefault();
+        setRowId(props.id);
+        const id = props.id;
+        console.log(id);
+
+        axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => {
+            console.log(res);
+            const user = localDAta.filter(props => props.id !== id);
+            setUsers(user);
+            console.log(user);
+
+        })
+
+
+
+
+    };
 
     // const handleEditFormSubmit = (event) => {
     //     event.preventDefault();
-    
+
     //     const rowId = {
     //       id: editContactId,
     //       fullName: editFormData.fullName,
     //       address: editFormData.address,
     //       phoneNumber: editFormData.phoneNumber,
     //       email: editFormData.email,
-    //     };    
+    //     };  
+
 
 
     return (
@@ -76,15 +98,16 @@ const InformationTable = () => {
                             <th className='py-4 px-2'>Action</th>
                         </tr>
                     </thead>
-                    {localDAta !== null ?
+                    {users !== null ?
                         <tbody>
-                            {localDAta.map((user) => (
+                            {users.map((user) => (
                                 <Fragment>
                                     {rowId === user.id ?
                                         <EditTable
                                             id={user.id}
                                             handleTableRowsChange={handleTableRowsChange}
-                                            editClick={editClick} />
+                                            editClick={editClick}
+                                        />
                                         :
                                         <ShowTable
                                             id={user.id}
@@ -93,6 +116,7 @@ const InformationTable = () => {
                                             email={user.email}
                                             phone={user.phone}
                                             editClick={editClick}
+                                            handleDeleteRows={handleDeleteRows}
                                         />
                                     }
                                 </Fragment>
