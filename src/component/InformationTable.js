@@ -1,12 +1,13 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import axios from 'axios';
+import React, { useState, Fragment, useContext } from 'react';
 import ShowTable from './ShowTable';
 import EditTable from './EditTable';
+import { LocalStorageContext } from '../context/LocalStorageContest';
 
 const InformationTable = () => {
+    
+    const localDAta = useContext(LocalStorageContext);
+    if(localDAta){console.log(localDAta);}
 
-    const [users, setUsers] = useState(null);
-    const [localDAtaObject, setLocalDataObject] = useState([]);
     const [editTableRows, setEditTableRows] = useState(
         {
             name: '',
@@ -16,28 +17,7 @@ const InformationTable = () => {
         }
     );
 
-    // get the data from server.
-    useEffect(() => {
-        const getUsers = async () => {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-            const data = [...response.data]
-            setUsers(data);
-        };
-        if (!users) {
-            getUsers();
-        };
-    }, []);
-
-    //save the data(recieved from server) in a localstorage.
-    useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users));
-        if (users !== null) {
-            let LocalData = localStorage.getItem('users');
-            setLocalDataObject(JSON.parse(LocalData));
-        }
-    }, [users]);
-
-    //rowId used for editting the row data.
+    //rowId uses for editting the row data.
     const [rowId, setRowId] = useState(null);
 
     //
@@ -57,6 +37,7 @@ const InformationTable = () => {
     const editClick = (event, props) => {
         event.preventDefault();
         setRowId(props.id);
+
         console.log(props.id);
 
         const editValues = {
@@ -68,6 +49,18 @@ const InformationTable = () => {
 
         setEditTableRows(editValues);
     }
+
+    // const handleEditFormSubmit = (event) => {
+    //     event.preventDefault();
+    
+    //     const rowId = {
+    //       id: editContactId,
+    //       fullName: editFormData.fullName,
+    //       address: editFormData.address,
+    //       phoneNumber: editFormData.phoneNumber,
+    //       email: editFormData.email,
+    //     };    
+
 
     return (
         <main className='m-10  grid grid-cols-1'>
@@ -83,12 +76,13 @@ const InformationTable = () => {
                             <th className='py-4 px-2'>Action</th>
                         </tr>
                     </thead>
-                    {localDAtaObject !== null ?
+                    {localDAta !== null ?
                         <tbody>
-                            {localDAtaObject.map((user) => (
+                            {localDAta.map((user) => (
                                 <Fragment>
                                     {rowId === user.id ?
                                         <EditTable
+                                            id={user.id}
                                             handleTableRowsChange={handleTableRowsChange}
                                             editClick={editClick} />
                                         :

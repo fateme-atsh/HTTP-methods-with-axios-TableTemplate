@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { nanoid } from 'nanoid';
 import ShowTable from './ShowTable';
+import { LocalStorageContext } from '../context/LocalStorageContest';
 
 
 const AddNewUser = () => {
-    const [users, setUsers] = useState([]);
-    useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users))
 
-    }, [users]);
+    const localDAta = useContext(LocalStorageContext);
+    const [user, setUser] = useState([]);
+    
+    // useEffect(() => {
+        localStorage.setItem('newusers', JSON.stringify(user));
+    // }, [user]);
 
     const [addNewUser, setAddNewUser] = useState({
         name: '',
@@ -18,6 +20,7 @@ const AddNewUser = () => {
         email: '',
         phone: '',
     });
+
     const handleFormChange = (event) => {
         event.preventDefault();
 
@@ -34,20 +37,18 @@ const AddNewUser = () => {
         event.preventDefault();
 
         const newUser = {
-            id: nanoid(),
             name: addNewUser.name,
             username: addNewUser.username,
             email: addNewUser.email,
             phone: addNewUser.phone,
         };
 
-        let LocalData = localStorage.getItem('users');
+        let LocalData = localStorage.getItem('newusers');
+        
         if (LocalData) {
             let localDataObject = JSON.parse(LocalData);
-            console.log(localDataObject);
             const newUsers = [...localDataObject, newUser];
-            setUsers(newUsers);
-            console.log(newUsers)
+            setUser(newUsers);
         }
         axios.post('https://jsonplaceholder.typicode.com/posts/', newUser).then(response => {
             console.log(response);
@@ -112,7 +113,7 @@ const AddNewUser = () => {
                 <table className='my-5 mx-2'>
                 <thead className='bg-gray-800 text-white'>
                     <tr>
-                        <th className='py-4 px-2'>id</th>
+                        <th className='py-4 px-2'></th>
                         <th className='py-4 px-2'>Name</th>
                         <th className='py-4 px-2'>User Name</th>
                         <th className='py-4 px-2'>Email</th>
@@ -120,10 +121,10 @@ const AddNewUser = () => {
                         <th className='py-4 px-2'>Action</th>
                     </tr>
                 </thead>
-                {users !== null ?
+                {user !== null ?
                 <tbody>
-                        {users.map(user => (<ShowTable
-                            id={user.id}
+                        {user.map(user => (<ShowTable
+                            id={null}
                             name={user.name}
                             username={user.username}
                             email={user.email}
