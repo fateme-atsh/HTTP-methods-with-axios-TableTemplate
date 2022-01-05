@@ -14,7 +14,7 @@ const ShowTable = ( {...props} ) => {
                     Edit </button>
 
                 <button type="button" onClick={(event) => props.handleDeleteRows(event,props)}
-                    className='px-3 py-2 bg-red-400 text-white border border-gray-900 rounded-md hover:bg-red-700'>
+                    className='px-3 py-2 bg-red-400 text-white border border-gray-900 rounded-md hover:bg-red-800 active:animate-pulse'>
                     Delete </button>
             </td>
         </tr>

@@ -1,15 +1,14 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import ShowTable from './ShowTable';
 import EditTable from './EditTable';
 import { LocalStorageContext } from '../context/LocalStorageContest';
 import axios from 'axios';
+import Buttonanimation from './ButtonAnimation';
 
 const InformationTable = () => {
 
     const localDAta = useContext(LocalStorageContext);
-    const [users, setUsers] = useState(localDAta);
-    if (localDAta) { console.log(localDAta); }
-
+    const [users, setUsers] = useState([...localDAta]);
     const [editTableRows, setEditTableRows] = useState(
         {
             name: '',
@@ -18,6 +17,10 @@ const InformationTable = () => {
             phone: '',
         }
     );
+
+    useEffect(() => {
+        setUsers([...localDAta])
+    }, []);
 
     //rowId uses for editting the row data.
     const [rowId, setRowId] = useState(null);
@@ -33,7 +36,7 @@ const InformationTable = () => {
         newFormData[fieldName] = fieldValue;
 
         setEditTableRows(newFormData);
-    }
+    };
 
     //when user clicked the edit button in a row && edit the field value.
     const editClick = (event, props) => {
@@ -54,39 +57,34 @@ const InformationTable = () => {
 
     const handleDeleteRows = (event, props) => {
         event.preventDefault();
-        setRowId(props.id);
+
         const id = props.id;
         console.log(id);
-
-        axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => {
+        if (window.confirm(`Are you sure you wish to delete user ${id}?`)) {
+            axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => {
             console.log(res);
-            const user = localDAta.filter(props => props.id !== id);
-            setUsers(user);
-            console.log(user);
-
-        })
-
-
-
-
+            setUsers(users.filter(props => props.id !== id));    
+        });
+        }
     };
 
-    // const handleEditFormSubmit = (event) => {
-    //     event.preventDefault();
+    const handleSaveEditedForm = (event) => {
+        event.preventDefault();
 
-    //     const rowId = {
-    //       id: editContactId,
-    //       fullName: editFormData.fullName,
-    //       address: editFormData.address,
-    //       phoneNumber: editFormData.phoneNumber,
-    //       email: editFormData.email,
-    //     };  
-
-
+        const editedUser = {
+            id: editTableRows.id,
+            name: editTableRows.name,
+            username: editTableRows.username,
+            phone: editTableRows.phone,
+            email: editTableRows.email,
+        };
+        axios.put(`https://jsonplaceholder.typicode.com/users/1`, editedUser)
+            .then(setUsers([...users, editedUser]));
+    };
 
     return (
         <main className='m-10  grid grid-cols-1'>
-            <form>
+            <form onSubmit={handleSaveEditedForm}>
                 <table className='w-full'>
                     <thead className='bg-gray-800 text-white'>
                         <tr>
@@ -105,8 +103,13 @@ const InformationTable = () => {
                                     {rowId === user.id ?
                                         <EditTable
                                             id={user.id}
+                                            name={user.name}
+                                            username={user.username}
+                                            email={user.email}
+                                            phone={user.phone}
                                             handleTableRowsChange={handleTableRowsChange}
                                             editClick={editClick}
+                                            handleSaveEditedForm={handleSaveEditedForm}
                                         />
                                         :
                                         <ShowTable
@@ -134,4 +137,3 @@ const InformationTable = () => {
 }
 
 export default InformationTable;
-;
