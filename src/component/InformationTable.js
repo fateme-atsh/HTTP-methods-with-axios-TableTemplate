@@ -3,7 +3,6 @@ import ShowTable from './ShowTable';
 import EditTable from './EditTable';
 import { LocalStorageContext } from '../context/LocalStorageContest';
 import axios from 'axios';
-import Buttonanimation from './ButtonAnimation';
 
 const InformationTable = () => {
 
