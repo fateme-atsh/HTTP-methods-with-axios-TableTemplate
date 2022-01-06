@@ -7,24 +7,28 @@ import axios from 'axios';
 const InformationTable = () => {
 
     const localDAta = useContext(LocalStorageContext);
-    const [users, setUsers] = useState([...localDAta]);
-    const [editTableRows, setEditTableRows] = useState(
-        {
-            name: '',
-            username: '',
-            email: '',
-            phone: '',
-        }
+    const [users, setUsers] = useState([]);
+    const [editTableRows, setEditTableRows] = useState({
+        id: null,
+        name: '',
+        username: '',
+        email: '',
+        phone: '',
+    }
     );
 
     useEffect(() => {
         setUsers([...localDAta])
-    }, []);
+    }, [localDAta]);
+
+    // useEffect(() => {
+    //     setUsers([...localDAta])
+    // }, []);
 
     //rowId uses for editting the row data.
     const [rowId, setRowId] = useState(null);
 
-    //
+
     const handleTableRowsChange = (event) => {
         event.preventDefault();
 
@@ -41,19 +45,20 @@ const InformationTable = () => {
     const editClick = (event, props) => {
         event.preventDefault();
         setRowId(props.id);
-
         console.log(props.id);
 
-        const editValues = {
+        const editedValues = {
+            id: props.id,
             name: props.name,
             username: props.username,
             email: props.email,
             phone: props.phone,
         };
 
-        setEditTableRows(editValues);
+        setEditTableRows(editedValues);
     };
 
+    // function: delete users
     const handleDeleteRows = (event, props) => {
         event.preventDefault();
 
@@ -61,12 +66,13 @@ const InformationTable = () => {
         console.log(id);
         if (window.confirm(`Are you sure you wish to delete user ${id}?`)) {
             axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => {
-            console.log(res);
-            setUsers(users.filter(props => props.id !== id));    
-        });
+                console.log(res);
+                setUsers(users.filter(props => props.id !== id));
+            });
         }
     };
 
+    // function: save EDITED informations
     const handleSaveEditedForm = (event) => {
         event.preventDefault();
 
@@ -78,7 +84,10 @@ const InformationTable = () => {
             email: editTableRows.email,
         };
         axios.put(`https://jsonplaceholder.typicode.com/users/1`, editedUser)
-            .then(setUsers([...users, editedUser]));
+            .then(res =>{
+                setUsers([...users, editedUser]);
+            console.log(res); 
+        });
     };
 
     return (
@@ -108,7 +117,7 @@ const InformationTable = () => {
                                             phone={user.phone}
                                             handleTableRowsChange={handleTableRowsChange}
                                             editClick={editClick}
-                                            handleSaveEditedForm={handleSaveEditedForm}
+                                            editTableRows={editTableRows}
                                         />
                                         :
                                         <ShowTable

@@ -7,7 +7,8 @@ const EditTable = ({ ...props }) => {
         event.preventDefault();
 
         const user = {
-            name: props.name,
+            id:props.id,
+            name: props.fullname,
             username: props.username,
             email: props.email,
             phone: props.phone,
@@ -18,29 +19,31 @@ const EditTable = ({ ...props }) => {
 
     return (
         <tr className='text-center odd:bg-gray-100 even:bg-gray-200 hover:bg-gray-300'>
-            <td className='py-4 px-2'>{props.id}</td>
+            <td className='py-4 px-2'>
+            {props.id}
+            </td>
 
             <td className='py-4 px-2'>
-                <input name="name" type="text" required="required"
-                    value={props.editClick.name}
+                <input name="name" type="text" required="required" placeholder='name'
+                    value={props.editTableRows.name}
                     onChange={props.handleTableRowsChange} />
             </td>
 
             <td className='py-4 px-2'>
-                <input name="username" type="text" required="required"
-                    value={props.editClick.username}
+                <input name="username" type="text" required="required" placeholder='user name'
+                    value={props.editTableRows.username}
                     onChange={props.handleTableRowsChange} />
             </td>
 
             <td className='py-4 px-2'>
-                <input name="email" type="text" required="required"
-                    value={props.editClick.email}
+                <input name="email" type="text" required="required" placeholder='email'
+                    value={props.editTableRows.email}
                     onChange={props.handleTableRowsChange} />
             </td>
 
             <td className='py-4 px-2'>
-                <input name="phone" type="text" required="required"
-                    value={props.editClick.phone}
+                <input name="phone" type="text" required="required" placeholder='phone number'
+                    value={props.editTableRows.phone}
                     onChange={props.handleTableRowsChange} />
             </td>
 

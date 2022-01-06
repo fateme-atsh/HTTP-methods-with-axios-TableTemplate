@@ -9,23 +9,12 @@ import { nanoid } from 'nanoid';
 const AddNewUser = () => {
 
     const localDAta = useContext(LocalStorageContext);
-    const [allUsers, setAllUsers] = useState([])
     const [user, setUser] = useState([]);
 
     //save new user with new localstorage key  & change the localstorageConext data.
     useEffect(() => {
         localStorage.setItem('newusers', JSON.stringify(user));
     }, [user]);
-
-    // useEffect(() => {
-    //     const addNewUser = localStorage.getItem('newusers');
-    //     setAllUsers([...localDAta,...JSON.parse(addNewUser)]);
-    //     console.log(allUsers);
-        
-    //     if (allUsers !== null) {
-    //         localStorage.setItem('users', JSON.stringify(allUsers));
-    //     }
-    // }, [user && allUsers]);
 
     const [addNewUser, setAddNewUser] = useState({
         id: nanoid(),
@@ -67,7 +56,21 @@ const AddNewUser = () => {
         axios.post('https://jsonplaceholder.typicode.com/posts/', newUser).then(response => {
             console.log(response);
         });
-    }
+    };
+
+    // function: delete users
+    const handleDeleteRows = (event, props) => {
+        event.preventDefault();
+
+        const id = props.id;
+        console.log(id);
+        if (window.confirm(`Are you sure you wish to delete user ${id}?`)) {
+            axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => {
+            console.log(res);
+            setUser(user.filter(props => props.id !== id));    
+        });
+        }
+    };
 
     return (
         <>
@@ -143,7 +146,8 @@ const AddNewUser = () => {
                                     name={user.name}
                                     username={user.username}
                                     email={user.email}
-                                    phone={user.phone} />
+                                    phone={user.phone} 
+                                    handleDeleteRows={handleDeleteRows}/>
                                 ))}
                             </tbody>
                             :
