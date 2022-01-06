@@ -17,18 +17,15 @@ const InformationTable = () => {
     }
     );
 
+    // save data on localstorage, in component state
     useEffect(() => {
         setUsers([...localDAta])
     }, [localDAta]);
 
-    // useEffect(() => {
-    //     setUsers([...localDAta])
-    // }, []);
-
     //rowId uses for editting the row data.
     const [rowId, setRowId] = useState(null);
 
-
+    // when the field on table changes, this fucntion called
     const handleTableRowsChange = (event) => {
         event.preventDefault();
 
@@ -41,7 +38,7 @@ const InformationTable = () => {
         setEditTableRows(newFormData);
     };
 
-    //when user clicked the edit button in a row && edit the field value.
+    //when user clicked the edit button in a row
     const editClick = (event, props) => {
         event.preventDefault();
         setRowId(props.id);
@@ -87,14 +84,19 @@ const InformationTable = () => {
         const newUser = [...users];
 
         const index = users.findIndex((user) => user.id === rowId);
-
         newUser[index] = editedUser;
 
         setUsers(newUser);
         setRowId(null);
 
         axios.put(`https://jsonplaceholder.typicode.com/users/${rowId}`, editedUser)
-            .then(res => {console.log(res)});
+            .then(res => { console.log(res) });
+    };
+
+    // function: cancel editting
+    const handleCancelEdditing = (event) => {
+        event.preventDefault();
+        setRowId(null);
     };
 
     return (
@@ -125,6 +127,7 @@ const InformationTable = () => {
                                             handleTableRowsChange={handleTableRowsChange}
                                             editClick={editClick}
                                             editTableRows={editTableRows}
+                                            handleCancelEdditing={handleCancelEdditing}
                                         />
                                         :
                                         <ShowTable

@@ -2,7 +2,7 @@ import Layout from "./router/layout";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App overflow-x-hidden">
       <Layout/>
     </div>
   );

@@ -1,22 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const EditTable = ({ ...props }) => {
-    const [users, setUsers] = useState([]);
-
-    const handleCancelEdditing = (event, props) => {
-        event.preventDefault();
-
-        const user = {
-            id:props.id,
-            name: props.fullname,
-            username: props.username,
-            email: props.email,
-            phone: props.phone,
-        };
-
-        setUsers(user);
-    }
-
+ 
     return (
         <tr className='text-center odd:bg-gray-100 even:bg-gray-200 hover:bg-gray-300'>
             <td className='py-4 px-2'>
@@ -52,7 +37,7 @@ const EditTable = ({ ...props }) => {
                     className='px-3 py-2 mx-3 border border-gray-900 rounded-md bg-green-300 hover:bg-green-500 hover:text-white'>
                     Save </button>
 
-                <button type="button" onClick={handleCancelEdditing}
+                <button type="button" onClick={props.handleCancelEdditing}
                     className='px-3 py-2 bg-red-400 text-white border border-gray-900 rounded-md hover:bg-red-700'>
                     Cancel </button>
             </td>
