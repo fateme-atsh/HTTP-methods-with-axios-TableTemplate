@@ -77,17 +77,24 @@ const InformationTable = () => {
         event.preventDefault();
 
         const editedUser = {
-            id: editTableRows.id,
+            id: rowId,
             name: editTableRows.name,
             username: editTableRows.username,
             phone: editTableRows.phone,
             email: editTableRows.email,
         };
-        axios.put(`https://jsonplaceholder.typicode.com/users/1`, editedUser)
-            .then(res =>{
-                setUsers([...users, editedUser]);
-            console.log(res); 
-        });
+
+        const newUser = [...users];
+
+        const index = users.findIndex((user) => user.id === rowId);
+
+        newUser[index] = editedUser;
+
+        setUsers(newUser);
+        setRowId(null);
+
+        axios.put(`https://jsonplaceholder.typicode.com/users/${rowId}`, editedUser)
+            .then(res => {console.log(res)});
     };
 
     return (
