@@ -105,7 +105,6 @@ const InformationTable = () => {
                 <table className='w-full'>
                     <thead className='bg-gray-800 text-white'>
                         <tr>
-                            <th className='py-4 px-2'>id</th>
                             <th className='py-4 px-2'>Name</th>
                             <th className='py-4 px-2'>User Name</th>
                             <th className='py-4 px-2'>Email</th>

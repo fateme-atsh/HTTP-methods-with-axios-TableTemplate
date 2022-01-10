@@ -172,7 +172,6 @@ const AddNewUser = () => {
                     <table className='my-5 mx-2'>
                         <thead className='bg-gray-800 text-white'>
                             <tr>
-                                <th className='py-4 px-2'>Id</th>
                                 <th className='py-4 px-2'>Name</th>
                                 <th className='py-4 px-2'>User Name</th>
                                 <th className='py-4 px-2'>Email</th>
@@ -206,7 +205,6 @@ const AddNewUser = () => {
                                                 handleDeleteRows={handleDeleteRows}
                                                 editClick={editClick} />
                                         }
-
                                     </Fragment>
                                 ))}
                             </tbody>

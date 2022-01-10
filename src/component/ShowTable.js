@@ -3,7 +3,6 @@ import React from 'react';
 const ShowTable = ( {...props} ) => {
    return (
         <tr className='text-center odd:bg-gray-100 even:bg-gray-200 hover:bg-gray-300'>
-            <td className='py-4 px-2'>{props.id}</td>
             <td className='py-4 px-2'>{props.name}</td>
             <td className='py-4 px-2'>{props.username}</td>
             <td className='py-4 px-2'>{props.email}</td>
